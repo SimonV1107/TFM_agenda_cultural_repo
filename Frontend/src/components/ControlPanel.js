@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/Detail.css";
 import "../styles/Controlpanel.css";
+import { TopMenuAdmin } from "./topMenuAdmin";
 
 export function ControlPanel() {
   const [events, setEvents] = useState([]);
@@ -133,11 +134,11 @@ export function ControlPanel() {
 
   return (
     <div>
+      <TopMenuAdmin/>
       {locals && localsInd < locals.length ? (
         <div>
-          <h1>Solicitudes de locales</h1>
-          <div>{locals[localsInd].nombre}</div>
-          <div className="containerDet">
+          <div className="title">Solicitudes de locales</div>
+          <div className="containerSoli">
             <img
               className="imgDetail"
               src={`http://127.0.0.1:8000${locals[localsInd].imagen}`}
@@ -185,16 +186,16 @@ export function ControlPanel() {
               <div>PRECIO:</div>
               <div className="blue">{events[eventsInd].precio}</div>
             </div>
-            <div className="separator">
+            {/* <div className="separator">
               <div>LOCAL:</div>
               <div className="localLink">{events[eventsInd].local.nombre}</div>
-            </div>
+            </div> */}
             <div className="alingLeft">
-              <button className="btnok" onClick={publicarEvento}>
-                ACEPTAR
-              </button>
               <button className="btncancel" onClick={eliminarEvento}>
                 RECHAZAR
+              </button>
+              <button className="btnok" onClick={publicarEvento}>
+                ACEPTAR
               </button>
             </div>
           </div>

@@ -10,11 +10,12 @@ export function LocalDetail() {
   const [eventsLocal, setEventsLocal] = useState([]);
 
   useEffect(() => {
-    console.log(localName);
+    console.log(local);
     findLocal();
   }, [localName]);
 
   useEffect(() => {
+    console.log("despues BOL",local);
     if (local != undefined) {
       findEventsByLocal();
     }
@@ -38,51 +39,58 @@ export function LocalDetail() {
       });
   };
 
-  return (
-    <>
-      <TopMenu />
-      {local !== undefined ? (
-        <div className="containerDet">
-          <img
-            className="imgDetail"
-            src={`http://127.0.0.1:8000${local.imagen}`}
-            alt={local.imagen}
-          />
-          <h1>{local.nombre}</h1>
-          <div className="separator">
-            <div>UBICACIÓN:</div>
-            <div className="blue">{local.ubicacion}</div>
-          </div>
-          <div className="separator">
-            <div>TELÉFONO:</div>
-            <div className="blue" >{local.telefono}</div>
-          </div>
-          <div className="separator">
-            <div>WEB:</div>
-            <a className="blue" href={local.url}>{local.web}</a>
-          </div>
-        </div>
-      ) : (
-        <div>La variable es undefined.</div>
-      )}
-      <h1 className="topLine">Mas eventos en este local</h1>
-      <div className="cardContainer">
-        {eventsLocal.map((evento) => (
-          <Link to={`/event-details/${evento.id}`}>
-            <div className="card">
-              <img
-                className="rowImg"
-                src={`http://127.0.0.1:8000${evento.imagen}`}
-                alt={evento.nombre}
-              />
-              <div className="level2" key={evento.id}>{evento.fecha}</div>
-              <div className="level1" key={evento.id}>{evento.nombre}</div>
-              <div className="level3" key={evento.id}>{evento.hora}</div>
-              <div className="level3" key={evento.id}>{evento.precio}</div>
+  if (local !== undefined) {
+    return (
+      <>
+        <TopMenu />
+        {local !== undefined ? (
+          <div className="containerDet">
+            <img
+              className="imgDetail"
+              src={`${local.imagen}`}
+              alt={local.imagen}
+            />
+            <h1>{local.nombre}</h1>
+            <div className="separator">
+              <div>UBICACIÓN:</div>
+              <div className="blue">{local.ubicacion}</div>
             </div>
-          </Link>
-        ))}
-      </div>
-    </>
-  );
+            <div className="separator">
+              <div>TELÉFONO:</div>
+              <div className="blue">{local.telefono}</div>
+            </div>
+            <div className="separator">
+              <div>WEB:</div>
+              <a className="blue" href={local.url}>
+                {local.web}
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div>La variable es undefined.</div>
+        )}
+
+        <h1 className="topLine">Mas eventos en este local</h1>
+        <div className="cardContainer">
+          {eventsLocal.map((evento) => (
+            <Link to={`/event-details/${evento.id}`}>
+              <div className="card">
+                <img
+                  className="rowImg"
+                  src={`http://127.0.0.1:8000${evento.imagen}`}
+                  alt={evento.nombre}
+                />
+                <div className="level2">{evento.fecha}</div>
+                <div className="level1">{evento.nombre}</div>
+                <div className="level3">{evento.hora}</div>
+                <div className="level3">{evento.precio}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </>
+    );
+  } else {
+    return <div>Render this when condition is false</div>;
+  }
 }

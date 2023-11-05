@@ -17,6 +17,7 @@ export function EventDetail() {
   useEffect(() => {
     if (event != undefined) {
       findEventsByCategory();
+      console.log(eventsCategory);
     }
   }, [event]);
 
@@ -38,6 +39,8 @@ export function EventDetail() {
       });
   };
 
+
+  
   return (
     <>
       <TopMenu />
@@ -72,19 +75,19 @@ export function EventDetail() {
           )}
         </div>
         <div>
-          <h1 style={{ "margin-top": "4rem" }}>Eventos Relacionados</h1>
+          <h1 style={{ marginTop: "3rem" }}>Eventos Relacionados</h1>
           {eventsCategory.map((evento) =>
-            evento.id != event.id ? (
-              <Link to={`/event-details/${event.id}`}>
+            evento.id != event.id? (
+              <Link to={`/event-details/${evento.id}`}>
                 <div className="card">
                   <img
                     className="rowImg"
-                    src={`http://127.0.0.1:8000${event.imagen}`}
+                    src={`http://127.0.0.1:8000${evento.imagen}`}
                     alt={event.nombre}
                   />
-                  <div className="level2" key={event.id}>{event.fecha}</div>
-                  <div className="level1" key={event.id}>{event.nombre}</div>
-                  <div className="level3"key={event.id}>{event.hora}</div>
+                  <div className="level2" key={evento.id}>{evento.fecha}</div>
+                  <div className="level1" key={evento.id}>{evento.nombre}</div>
+                  <div className="level3"key={evento.id}>{evento.hora}</div>
                   <div className="level3" style={{ "margin-bottom": "1rem" }} key={event.id}>
                     {event.precio}
                   </div>

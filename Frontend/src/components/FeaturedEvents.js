@@ -4,6 +4,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import "../styles/EventsRow.css";
+
 
 
 export function FeaturedEvents() {
@@ -15,8 +17,8 @@ export function FeaturedEvents() {
     speed: 500,
     slidesToShow: 3, // Muestra tres imágenes a la vez
     slidesToScroll: 1,
-    prevArrow: <button>Previous</button>, // Personaliza las flechas de navegación
-    nextArrow: <button>Next</button>,
+    prevArrow: <button></button>, // Personaliza las flechas de navegación
+    nextArrow: <button></button>,
   };
 
   useEffect(() => {
@@ -42,20 +44,20 @@ export function FeaturedEvents() {
 
   return (
     <>
-      <h1>Eventos destacados</h1>
+      <div className="title2">Eventos destacados</div>
       <Slider {...settings}>
         {events.map((evento) => (
           <Link to={`/event-details/${evento.id}`}>
-          <div className="card">
+          <div className="cardCarousel">
             <img
               className="rowImg"
               src={`http://127.0.0.1:8000${evento.imagen}`}
               alt={evento.nombre}
             />
-            <div key={evento.id}>{evento.fecha}</div>
-            <div key={evento.id}>{evento.nombre}</div>
-            <div key={evento.id}>{evento.hora}</div>
-            <div key={evento.id}>{evento.precio}</div>
+            <div className="level2" key={evento.id}>{evento.fecha}</div>
+              <div className="level1" key={evento.id}>{evento.nombre}</div>
+              <div className="level3" key={evento.id}>{evento.hora}</div>
+              <div className="level3" key={evento.id}>{evento.precio}</div>
           </div>
         </Link>
         ))}

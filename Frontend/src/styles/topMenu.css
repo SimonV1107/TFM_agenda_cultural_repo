@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+
     border-bottom: 2px solid #01748b; 
 }
 
@@ -31,4 +31,18 @@ body{
 
 .blue{
     color: #01748b;
+}
+
+.footer{
+    height: 5rem;
+    background-color: rgb(49, 49, 49);
+}
+
+.footer2{
+    height: 5rem;
+}
+
+.logo{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

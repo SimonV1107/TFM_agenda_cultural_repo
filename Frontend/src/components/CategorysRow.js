@@ -7,10 +7,10 @@ export function CategorysRow(props) {
     const [events, setEvents] = useState([]); 
 
   useEffect(() => {
-    if (props.date != undefined) {
+    if (props.category != undefined) {
       findEvents();
     }
-  }, [props.date]);
+  }, [props.category]);
 
   const findEvents = () => {
     fetch(`http://127.0.0.1:8000/eventos/eventos-categoria/${props.category}/`)
@@ -30,7 +30,7 @@ export function CategorysRow(props) {
 
   return (
     <>
-      <h1>{props.category}</h1>
+      <h1 className="cat">{props.category}</h1>
       <div className="container">
         {events.map((event) => (
           <Link to={`/event-details/${event.id}`}>

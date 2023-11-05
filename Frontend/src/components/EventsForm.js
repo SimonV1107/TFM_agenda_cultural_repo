@@ -6,7 +6,8 @@ import "../styles/EventsRow.css";
 
 
 export function EventsForm() {
-  const [evento, setEvento] = useState({
+
+  const initialEvento = {
     nombre: "",
     fecha: "",
     hora: "",
@@ -22,10 +23,14 @@ export function EventsForm() {
     descripcion: "",
     imagen: null,
     estado: "solicitado",
-  });
+  };
+
+  const [evento, setEvento] = useState(initialEvento);
 
   const [data, setData] = useState([]);
   const [locals, setLocals] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
 
   const categorias = [
     "Música",
@@ -40,6 +45,9 @@ export function EventsForm() {
     "Aire Libre",
     "Deportivos",
   ];
+
+  const horario = ["Mañana", "Tarde", "Noche", "Todo el dia"]
+
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -94,16 +102,29 @@ export function EventsForm() {
 
       // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redirigir a otra página.
       console.log("Respuesta del servidor:", response.data);
+      openModal()
+      setEvento(initialEvento);
     } catch (error) {
       // Aquí puedes manejar los errores, como mostrar un mensaje de error al usuario.
       console.error("Error al hacer la solicitud POST:", error);
     }
   };
 
+
+  const openModal = () => {
+    setIsOpen(true);
+  
+};
+
+const closeModal = () => {
+  setIsOpen(false);
+  setEvento(initialEvento);
+};
+
   return (
     <div>
       <TopMenu />
-      <h2>Crear Evento</h2>
+      <div className="title" >Publicar Evento</div>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="rowForm">
           <div className="column">
@@ -143,14 +164,19 @@ export function EventsForm() {
           </div>
           <div className="column">
             <label htmlFor="horario">Horario:</label>
-            <input
-              type="text"
+            <select
               id="horario"
               name="horario"
               value={evento.horario}
               onChange={handleChange}
-              required
-            />
+            >
+              <option value="">Selecciona un horario</option>
+              {horario.map((hora, index) => (
+                <option key={index} value={hora}>
+                  {hora}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="rowForm">
@@ -221,9 +247,23 @@ export function EventsForm() {
           />
         </div>
         <div className="saveButton">
-          <button type="submit">Guardar</button>
+          <button className="btnok" type="submit">ENVIAR</button>
         </div>
       </form>
+      <div>
+        {isOpen && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <div className="modal-content">
+                <div>
+                 Se ha enviado la solicitud correctamente!
+                </div>
+                <button className="btnok" onClick={closeModal}>Aceptar</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

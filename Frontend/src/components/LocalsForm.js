@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../styles/EventForm.css";
 import { TopMenu } from "./topMenu";
+import "../styles/Controlpanel.css";
+
+
 
 export function LocalsForm() {
   const [local, setLocal] = useState({
@@ -12,6 +15,8 @@ export function LocalsForm() {
     imagen: null,
     estado: "solicitado",
   });
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value, type, files } = event.target;
@@ -45,16 +50,27 @@ export function LocalsForm() {
 
       // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redirigir a otra página.
       console.log("Respuesta del servidor:", response.data);
+      openModal()
     } catch (error) {
       // Aquí puedes manejar los errores, como mostrar un mensaje de error al usuario.
       console.error("Error al hacer la solicitud POST:", error);
     }
   };
 
+
+  const openModal = () => {
+      setIsOpen(true);
+    
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div>
       <TopMenu />
-      <h2>Formulario para Agregar un Local</h2>
+      <div className="title">PUBLICAR LOCAL</div>
       <form onSubmit={handleSubmit}>
         <div className="rowForm">
           <div className="column">
@@ -114,9 +130,23 @@ export function LocalsForm() {
           />
         </div>
         <div className="saveButton">
-          <button type="submit">Guardar Local</button>
+          <button  className="btnok" type="submit">ENVIAR</button>
         </div>
       </form>
+      <div>
+        {isOpen && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <div className="modal-content">
+                <div>
+                 Se ha enviado la solicitud correctamente!
+                </div>
+                <button className="btnok" onClick={closeModal}>Aceptar</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
